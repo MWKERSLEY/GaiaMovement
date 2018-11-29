@@ -1,0 +1,6 @@
+﻿@model GaiaMovement.Models.PosAndVelJSON
+<div id="webgl-container"></div>
+@*<div>@Model.PosAndVelJSONString</div>*@
+<script src="~/scripts/three.js"></script>
+<script src="~/scripts/OrbitControls.js"></script>
+<script src="~/scripts/app.js" stardata=@Model.PosAndVelJSONString></script>
