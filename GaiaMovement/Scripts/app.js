@@ -9,8 +9,13 @@ var example = (function () {
     var scene = new THREE.Scene(),
         renderer = window.WebGLRenderingContext ? new THREE.WebGLRenderer() : new THREE.CanvasRenderer(),
         light = new THREE.AmbientLight(0xffffff),
-        camera,
-        controls;
+        camera = new THREE.PerspectiveCamera(
+            35,
+            window.innerWidth / window.innerHeight,
+            1,
+            10000000000000
+        ),
+        controls = new THREE.OrbitControls(camera);
 
     function initScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -18,12 +23,12 @@ var example = (function () {
 
         scene.add(light);
 
-        camera = new THREE.PerspectiveCamera(
-            35,
-            window.innerWidth / window.innerHeight,
-            1,
-            100000000
-        );
+        //camera = new THREE.PerspectiveCamera(
+        //    35,
+        //    window.innerWidth / window.innerHeight,
+        //    1,
+        //    100000000
+        //);
 
         scene.add(camera);        
 
@@ -117,12 +122,13 @@ var example = (function () {
         //scene.add(box);
         //endbox
 
-        controls = new THREE.OrbitControls(camera);
+        //controls = new THREE.OrbitControls(camera);
         controls.target = new THREE.Vector3(galCentre.position.x, galCentre.position.y, galCentre.position.z);
         controls.addEventListener('change', render);
-        camera.position.set(1000, 1000, 1000);
+        camera.position.set(-10000, 1000, 500);
+        //camera.up.set(0, 0, 1);
+        controls.update();
         render();
-        camera.position.set(1000, 1000, 1000);
     }
 
     //function assignColorsToCube(cube) {
