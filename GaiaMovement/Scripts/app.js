@@ -35,8 +35,8 @@ var example = (function () {
         var stars = [];
         for (var i = 0; i < stardata.length; i++) {
             stars.push(new THREE.ArrowHelper( 
-                new THREE.Vector3(stardata[i].vx+10, stardata[i].vy+235.25, stardata[i].vz+7.17).normalize(),
-                new THREE.Vector3(stardata[i].px, stardata[i].py, stardata[i].pz),
+                new THREE.Vector3(stardata[i].vx + 10, stardata[i].vz + 7.17, -(stardata[i].vy+235.25)).normalize(),
+                new THREE.Vector3(stardata[i].px, stardata[i].pz, -stardata[i].py),
                 Math.sqrt(stardata[i].V * stardata[i].V+55494)/3,
                 0xffff00, Math.sqrt(stardata[i].V * stardata[i].V + 55494) / 9, Math.sqrt(stardata[i].V * stardata[i].V + 55494)/9));
         }
@@ -57,15 +57,15 @@ var example = (function () {
         var n = d.getTime();
         if (n % 2 === 1) {
             galCentre.position.x = Math.cos(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000;
-            galCentre.position.y = Math.sin(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000;
-            galCentre.position.z = Math.sin(-0.0462 * Math.PI / 180) * 8000;
+            galCentre.position.y = Math.sin(-0.0462 * Math.PI / 180) * 8000;
+            galCentre.position.z = -(Math.sin(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000);
             scene.add(galCentre);
         }
         else
         {
             galCentre.position.x = Math.cos(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000;
-            galCentre.position.y = Math.sin(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000;
-            galCentre.position.z = Math.sin(-0.0462 * Math.PI / 180) * 8000;
+            galCentre.position.y = Math.sin(-0.0462 * Math.PI / 180) * 8000;
+            galCentre.position.z = -(Math.sin(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000);
             scene.add(galCentre);
         }
 
@@ -79,17 +79,17 @@ var example = (function () {
         scene.add(earth);
 
         var eartharrow = new THREE.ArrowHelper(
-            new THREE.Vector3(10, 235.25, 7.17).normalize(),
+            new THREE.Vector3(10, 7.17, -235.25).normalize(),
             new THREE.Vector3(0, 0, 0),
             235.57 / 3,
             0x0000ff, 235.57 / 9, 235.57 / 9);
         scene.add(eartharrow);
 
         var GCarrow = new THREE.ArrowHelper(
-            new THREE.Vector3(0, 0, 1).normalize(),
+            new THREE.Vector3(0, 1, 0).normalize(),
             new THREE.Vector3(galCentre.position.x, galCentre.position.y, galCentre.position.z),
-            5000 / 3,
-            0xff0000, 5000 / 9, 5000 / 9);
+            3000 / 3,
+            0xff0000, 3000 / 9, 3000 / 9);
         scene.add(GCarrow);
 
         //axes
