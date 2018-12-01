@@ -13,6 +13,7 @@ namespace GaiaMovement.Controllers
         private Gaia130618Entities1 db = new Gaia130618Entities1();
         public ActionResult Index(int starcount = 1000, int type = 1)
         {
+            ViewBag.title = starcount;
             HttpContext.Server.ScriptTimeout = 300;
             Random rnd = new Random();
             var rtnlist = new List<double>();

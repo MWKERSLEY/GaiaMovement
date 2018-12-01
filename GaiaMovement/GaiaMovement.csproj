@@ -167,6 +167,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Milky_Way_Galaxy.png" />
+    <Content Include="Images\Milky_Way_Galaxy_alpha.jpg" />
     <Content Include="Models\GaiaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GaiaModel.edmx</DependentUpon>

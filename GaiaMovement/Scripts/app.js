@@ -59,15 +59,22 @@ var example = (function () {
             galCentre.position.x = Math.cos(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000;
             galCentre.position.y = Math.sin(-0.0462 * Math.PI / 180) * 8000;
             galCentre.position.z = -(Math.sin(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000);
-            scene.add(galCentre);
+            //scene.add(galCentre);
         }
         else
         {
             galCentre.position.x = Math.cos(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000;
             galCentre.position.y = Math.sin(-0.0462 * Math.PI / 180) * 8000;
             galCentre.position.z = -(Math.sin(359.9443 * Math.PI / 180) * Math.cos(-0.0462 * Math.PI / 180) * 8000);
-            scene.add(galCentre);
+            //scene.add(galCentre);
         }
+
+        var GCarrow = new THREE.ArrowHelper(
+            new THREE.Vector3(0, 1, 0).normalize(),
+            new THREE.Vector3(galCentre.position.x, galCentre.position.y, galCentre.position.z),
+            3000 / 3,
+            0xff0000, 3000 / 9, 3000 / 9);
+        //scene.add(GCarrow);
 
         //earth
         var geometry2 = new THREE.SphereGeometry(25, 16, 16);
@@ -85,16 +92,9 @@ var example = (function () {
             0x0000ff, 235.57 / 9, 235.57 / 9);
         scene.add(eartharrow);
 
-        var GCarrow = new THREE.ArrowHelper(
-            new THREE.Vector3(0, 1, 0).normalize(),
-            new THREE.Vector3(galCentre.position.x, galCentre.position.y, galCentre.position.z),
-            3000 / 3,
-            0xff0000, 3000 / 9, 3000 / 9);
-        scene.add(GCarrow);
-
         //axes
-        var axisHelper = new THREE.AxisHelper(50);
-        scene.add(axisHelper);
+        //var axisHelper = new THREE.AxisHelper(50);
+        //scene.add(axisHelper);
 
         //galaxy
         //var galaxymap = new THREE.ImageLoader();
@@ -108,51 +108,103 @@ var example = (function () {
         //galaxy.position.z = 5262.20112754097;
         //scene.add(galaxy);
 
-        ////box
-        //box = new THREE.Mesh(
-        //    new THREE.BoxGeometry(
-        //        20,
-        //        20,
-        //        20),
-        //    new THREE.MeshBasicMaterial({
+        //var geometry3 = new THREE.PlaneGeometry(500, 200, 320);
+        //var material3 = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide });
+        //var plane3 = new THREE.Mesh(geometry3, material3);
+        //scene.add(plane3);
 
-        //        vertexColors: THREE.VertexColors
-        //    }));
-        //assignColorsToCube(box);
-        //scene.add(box);
-        //endbox
+        // plane
+        //var texture = new THREE.TextureLoader().load('Images/Milky_Way_Galaxy.jpg');
+        //var img = new THREE.MeshBasicMaterial({
+        //    map:
+        //        //THREE.ImageUtils.loadTexture('Images/Milky_Way_Galaxy.jpg'),
+        //        texture,
+        //    transparent: true,
+        //    side: THREE.DoubleSide//, alphaTest: 0.3
+        //});
+        //        //var alphaMap = new THREE.ImageUtils.loadTexture('Images/Milky_Way_Galaxy.jpg');
+        //img.alphaMap = texture;
+        //img.map.needsUpdate = true; //ADDED
+        //img.alphaMap.needsUpdate = true; //ADDED
+        //var plane = new THREE.Mesh(new THREE.PlaneGeometry(45000, 45000), img);
+        //plane.overdraw = true;
+        //plane.rotation.x = -Math.PI / 2;
+        //plane.rotation.z = Math.PI * 1.55;
+        //plane.position.x = 8000;
+        //img.needsUpdate = true;
+        //texture.needsUpdate = true;
+        //plane.needsUpdate = true;
+        //scene.add(plane);
+
+
+
+        window.addEventListener('resize', onWindowResize, false);
 
         //controls = new THREE.OrbitControls(camera);
         controls.target = new THREE.Vector3(galCentre.position.x, galCentre.position.y, galCentre.position.z);
         controls.addEventListener('change', render);
-        camera.position.set(-10000, 1000, 500);
-        //camera.up.set(0, 0, 1);
+        camera.position.set(-20000, 7000, 1000);
+        controls.autoRotate = true;
         controls.update();
+        //camera.up.set(0, 0, 1);
+        //render();
+
+
+        var loader = new THREE.TextureLoader();
+        // load a resource
+        loader.load(
+            // resource URL
+            'Images/Milky_Way_Galaxy.jpg',
+
+            // onLoad callback
+            function (texture) {
+                // in this example we create the material when the texture is loaded
+                var material = new THREE.MeshBasicMaterial({
+                    map: texture
+                });
+
+                var img = new THREE.MeshBasicMaterial({
+                    map: texture, transparent: true,
+                    side: THREE.DoubleSide//, alphaTest: 0.3
+                });
+                img.alphaMap = texture;
+                img.map.needsUpdate = true; //ADDED
+                img.alphaMap.needsUpdate = true; //ADDED
+                var plane = new THREE.Mesh(new THREE.PlaneGeometry(45000, 45000), img);
+                plane.overdraw = true;
+                plane.rotation.x = -Math.PI / 2;
+                plane.rotation.z = Math.PI * 1.55;
+                plane.position.x = 8000;
+                img.needsUpdate = true;
+                plane.needsUpdate = true;
+                scene.add(plane);
+                plane.needsUpdate = true;
         render();
+
+
+            },
+
+            // onProgress callback currently not supported
+            undefined,
+
+            // onError callback
+            function (err) {
+                console.error('An error happened.');
+            }
+        );
     }
 
-    //function assignColorsToCube(cube) {
+    function onWindowResize() {
 
+        var width = window.innerWidth;
+        var height = window.innerHeight;
 
-    //    var colors = [
-    //        new THREE.Color("rgb(255,0,0)"),
-    //        new THREE.Color("rgb(0,255,0)"),
-    //        new THREE.Color("rgb(0,0,255)"),
-    //        new THREE.Color("rgb(255,255,0)"),
-    //        new THREE.Color("rgb(0,255,255)"),
-    //        new THREE.Color("rgb(255,0,255)")
-    //    ];
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
 
-    //    for (var i = 0; i < 12; i += 2) {
+        renderer.setSize(width, height);
 
-    //        var color = colors[i / 2];
-
-    //        //each cube face is made up of 2 triangles & we want same color for each
-    //        cube.geometry.faces[i].color = color;
-    //        cube.geometry.faces[i + 1].color = color;
-    //    }
-    //}
-
+    }
     function render() {
         renderer.render(scene, camera);        
     }
